@@ -19,6 +19,6 @@ public class Agence {
     private String ville;
     private String telephone;
 
-    @OneToMany(mappedBy = "agence")
+    @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vehicule> vehicules;
 }

@@ -14,7 +14,7 @@ export interface VehiculeDTO {
   prixParJour: number;
   dateMiseEnService: string;
   statut: StatutVehicule;
-  agenceDTO: AgenceDTO;
+  agenceDTO?: AgenceDTO;
 }
 
 export interface VoitureDTO extends VehiculeDTO {

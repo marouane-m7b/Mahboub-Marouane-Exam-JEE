@@ -11,13 +11,13 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-edit-vehicule',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './edit-vehicule.html',
   styleUrl: './edit-vehicule.css'
 })
 export class EditVehicule implements OnInit {
   vehiculeId!: string;
-  vehicule!: VehiculeDTO;
+  vehicule?: VehiculeDTO;
   editVehiculeFormGroup!: FormGroup;
   agences$!: Observable<AgenceDTO[]>;
 
@@ -33,40 +33,38 @@ export class EditVehicule implements OnInit {
 
   ngOnInit(): void {
     this.agences$ = this.agenceService.getAgences();
+    this.editVehiculeFormGroup = this.fb.group({
+      id: [''],
+      type: [''],
+      marque: ['', Validators.required],
+      modele: ['', Validators.required],
+      matricule: ['', Validators.required],
+      prixParJour: [0, [Validators.required, Validators.min(0)]],
+      statut: ['', Validators.required],
+      agenceDTO: [null, Validators.required],
+      // Optional fields initialized to prevent errors
+      nombrePortes: [0],
+      typeCarburant: [''],
+      boiteVitesse: [''],
+      cylindree: [0],
+      typeMoto: [''],
+      casqueInclus: [false]
+    });
+
     this.vehiculeService.getVehicule(this.vehiculeId).subscribe({
       next: (data) => {
         this.vehicule = data;
+        this.editVehiculeFormGroup.patchValue(data);
+        // Ensure specific validators are set if needed
         if (this.vehicule.type === 'Voiture') {
-          let voiture = this.vehicule as VoitureDTO;
-          this.editVehiculeFormGroup = this.fb.group({
-            id: [voiture.id],
-            type: [voiture.type],
-            marque: [voiture.marque, Validators.required],
-            modele: [voiture.modele, Validators.required],
-            matricule: [voiture.matricule, Validators.required],
-            prixParJour: [voiture.prixParJour, [Validators.required, Validators.min(0)]],
-            statut: [voiture.statut, Validators.required],
-            agenceDTO: [voiture.agenceDTO, Validators.required],
-            nombrePortes: [voiture.nombrePortes, Validators.required],
-            typeCarburant: [voiture.typeCarburant, Validators.required],
-            boiteVitesse: [voiture.boiteVitesse, Validators.required]
-          });
+          this.editVehiculeFormGroup.get('nombrePortes')?.setValidators(Validators.required);
+          this.editVehiculeFormGroup.get('typeCarburant')?.setValidators(Validators.required);
+          this.editVehiculeFormGroup.get('boiteVitesse')?.setValidators(Validators.required);
         } else {
-          let moto = this.vehicule as MotoDTO;
-          this.editVehiculeFormGroup = this.fb.group({
-            id: [moto.id],
-            type: [moto.type],
-            marque: [moto.marque, Validators.required],
-            modele: [moto.modele, Validators.required],
-            matricule: [moto.matricule, Validators.required],
-            prixParJour: [moto.prixParJour, [Validators.required, Validators.min(0)]],
-            statut: [moto.statut, Validators.required],
-            agenceDTO: [moto.agenceDTO, Validators.required],
-            cylindree: [moto.cylindree, Validators.required],
-            typeMoto: [moto.typeMoto, Validators.required],
-            casqueInclus: [moto.casqueInclus]
-          });
+          this.editVehiculeFormGroup.get('cylindree')?.setValidators(Validators.required);
+          this.editVehiculeFormGroup.get('typeMoto')?.setValidators(Validators.required);
         }
+        this.editVehiculeFormGroup.updateValueAndValidity();
       },
       error: (err) => {
         console.log(err);

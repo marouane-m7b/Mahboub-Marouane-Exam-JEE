@@ -30,6 +30,6 @@ public abstract class Vehicule {
     @ManyToOne
     private Agence agence;
 
-    @OneToMany(mappedBy = "vehicule")
+    @OneToMany(mappedBy = "vehicule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Location> locations;
 }

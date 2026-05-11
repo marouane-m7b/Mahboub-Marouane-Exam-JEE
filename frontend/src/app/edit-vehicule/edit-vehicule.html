@@ -1,7 +1,7 @@
 <div class="container mt-4">
-  <div class="card col-md-8 offset-md-2">
+  <div class="card col-md-8 offset-md-2" *ngIf="vehicule">
     <div class="card-header">
-      <h3>Modifier le Véhicule ({{ vehicule?.type }})</h3>
+      <h3>Modifier le Véhicule ({{ vehicule.type }})</h3>
     </div>
     <div class="card-body" *ngIf="editVehiculeFormGroup">
       <form [formGroup]="editVehiculeFormGroup" (ngSubmit)="handleUpdateVehicule()">
@@ -47,7 +47,7 @@
         </div>
 
         <!-- Specific Fields for Voiture -->
-        <div *ngIf="vehicule?.type === 'Voiture'" class="row">
+        <div *ngIf="vehicule.type === 'Voiture'" class="row">
           <div class="col-md-4 mb-3">
             <label class="form-label">Nombre de Portes</label>
             <input type="number" formControlName="nombrePortes" class="form-control">
@@ -71,7 +71,7 @@
         </div>
 
         <!-- Specific Fields for Moto -->
-        <div *ngIf="vehicule?.type === 'Moto'" class="row">
+        <div *ngIf="vehicule.type === 'Moto'" class="row">
           <div class="col-md-4 mb-3">
             <label class="form-label">Cylindrée</label>
             <input type="number" formControlName="cylindree" class="form-control">

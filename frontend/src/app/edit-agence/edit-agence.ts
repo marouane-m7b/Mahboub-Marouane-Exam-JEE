@@ -8,7 +8,7 @@ import { AgenceDTO } from '../model/agence.model';
 @Component({
   selector: 'app-edit-agence',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './edit-agence.html',
   styleUrl: './edit-agence.css'
 })
@@ -26,15 +26,17 @@ export class EditAgence implements OnInit {
   }
 
   ngOnInit(): void {
+    this.editAgenceFormGroup = this.fb.group({
+      id: [''],
+      nom: ['', Validators.required],
+      adresse: ['', Validators.required],
+      ville: ['', Validators.required],
+      telephone: ['', Validators.required]
+    });
+
     this.agenceService.getAgence(this.agenceId).subscribe({
       next: (agence) => {
-        this.editAgenceFormGroup = this.fb.group({
-          id: [agence.id],
-          nom: [agence.nom, Validators.required],
-          adresse: [agence.adresse, Validators.required],
-          ville: [agence.ville, Validators.required],
-          telephone: [agence.telephone, Validators.required]
-        });
+        this.editAgenceFormGroup.patchValue(agence);
       },
       error: (err) => {
         console.log(err);

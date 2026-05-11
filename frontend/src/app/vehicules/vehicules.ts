@@ -3,22 +3,45 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { VehiculeService } from '../services/vehicule.service';
 import { VehiculeDTO } from '../model/vehicule.model';
-import { catchError, Observable, throwError } from 'rxjs';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { catchError, map, Observable, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-vehicules',
-  imports: [CommonModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './vehicules.html',
   styleUrl: './vehicules.css'
 })
 export class Vehicules implements OnInit {
   vehicules!: Observable<VehiculeDTO[]>;
   errorMessage!: string;
+  searchFormGroup!: FormGroup;
 
-  constructor(private vehiculeService: VehiculeService) {}
+  constructor(private vehiculeService: VehiculeService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.searchFormGroup = this.fb.group({
+      keyword: ['']
+    });
     this.handleLoadVehicules();
+  }
+
+  handleSearchVehicules() {
+    let kw = this.searchFormGroup.value.keyword;
+    this.vehicules = this.vehiculeService.getVehicules().pipe(
+      map(data => {
+        return data.filter(v => 
+          v.marque.toLowerCase().includes(kw.toLowerCase()) || 
+          v.modele.toLowerCase().includes(kw.toLowerCase()) ||
+          v.matricule.toLowerCase().includes(kw.toLowerCase())
+        );
+      }),
+      catchError(err => {
+        this.errorMessage = err.message;
+        return throwError(() => err);
+      })
+    );
   }
 
   handleLoadVehicules() {

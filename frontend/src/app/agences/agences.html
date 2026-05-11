@@ -5,9 +5,17 @@
     <h2 class="mb-0">
       <i class="bi bi-building me-2 text-primary"></i>Agences
     </h2>
-    <a routerLink="/new-agence" class="btn btn-primary">
-      <i class="bi bi-plus-circle me-1"></i>Nouvelle Agence
-    </a>
+    <div class="d-flex gap-2 align-items-center">
+      <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchAgences()" class="d-flex gap-2">
+        <input type="text" formControlName="keyword" class="form-control" placeholder="Rechercher...">
+        <button class="btn btn-outline-primary">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+      <a routerLink="/new-agence" class="btn btn-primary text-nowrap">
+        <i class="bi bi-plus-circle me-1"></i>Nouvelle Agence
+      </a>
+    </div>
   </div>
 
   <!-- Data table -->
