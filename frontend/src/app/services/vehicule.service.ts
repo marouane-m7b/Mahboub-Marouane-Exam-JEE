@@ -21,4 +21,12 @@ export class VehiculeService {
   public deleteVehicule(id: string): Observable<void> {
     return this.http.delete<void>(environment.backendHost + '/vehicules/' + id);
   }
+
+  public updateVoiture(id: string, voiture: any): Observable<any> {
+    return this.http.put<any>(environment.backendHost + '/vehicules/' + id + '/voiture', voiture);
+  }
+
+  public updateMoto(id: string, moto: any): Observable<any> {
+    return this.http.put<any>(environment.backendHost + '/vehicules/' + id + '/moto', moto);
+  }
 }

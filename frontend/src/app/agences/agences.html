@@ -33,11 +33,11 @@
               <td>{{ a.ville }}</td>
               <td>{{ a.telephone }}</td>
               <td class="text-center">
-                <!-- Edit (not functional yet) -->
-                <button class="btn btn-sm btn-warning btn-action me-1" title="Modifier">
+                <!-- Edit -->
+                <a [routerLink]="['/edit-agence', a.id]" class="btn btn-sm btn-warning btn-action me-1" title="Modifier">
                   <i class="bi bi-pencil"></i>
-                </button>
-                <!-- Delete (not functional yet) -->
+                </a>
+                <!-- Delete -->
                 <button class="btn btn-sm btn-danger btn-action" title="Supprimer"
                         (click)="handleDeleteAgence(a)">
                   <i class="bi bi-trash"></i>

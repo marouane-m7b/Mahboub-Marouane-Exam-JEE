@@ -151,6 +151,49 @@ public class GestionLocationServiceImpl implements GestionLocationService {
     }
 
     @Override
+    public void deleteVehicule(String vehiculeId) {
+        vehiculeRepository.deleteById(vehiculeId);
+    }
+
+    @Override
+    public VoitureDTO updateVoiture(String vehiculeId, VoitureDTO voitureDTO) throws VehiculeNotFoundException, AgenceNotFoundException {
+        log.info("Updating Voiture: {}", vehiculeId);
+        Voiture voiture = (Voiture) vehiculeRepository.findById(vehiculeId)
+                .orElseThrow(() -> new VehiculeNotFoundException("Vehicule Not Found"));
+        Agence agence = agenceRepository.findById(voitureDTO.getAgenceDTO().getId())
+                .orElseThrow(() -> new AgenceNotFoundException("Agence Not Found"));
+        voiture.setMarque(voitureDTO.getMarque());
+        voiture.setModele(voitureDTO.getModele());
+        voiture.setMatricule(voitureDTO.getMatricule());
+        voiture.setPrixParJour(voitureDTO.getPrixParJour());
+        voiture.setStatut(voitureDTO.getStatut());
+        voiture.setNombrePortes(voitureDTO.getNombrePortes());
+        voiture.setTypeCarburant(voitureDTO.getTypeCarburant());
+        voiture.setBoiteVitesse(voitureDTO.getBoiteVitesse());
+        voiture.setAgence(agence);
+        return dtoMapper.fromVoiture(vehiculeRepository.save(voiture));
+    }
+
+    @Override
+    public MotoDTO updateMoto(String vehiculeId, MotoDTO motoDTO) throws VehiculeNotFoundException, AgenceNotFoundException {
+        log.info("Updating Moto: {}", vehiculeId);
+        Moto moto = (Moto) vehiculeRepository.findById(vehiculeId)
+                .orElseThrow(() -> new VehiculeNotFoundException("Vehicule Not Found"));
+        Agence agence = agenceRepository.findById(motoDTO.getAgenceDTO().getId())
+                .orElseThrow(() -> new AgenceNotFoundException("Agence Not Found"));
+        moto.setMarque(motoDTO.getMarque());
+        moto.setModele(motoDTO.getModele());
+        moto.setMatricule(motoDTO.getMatricule());
+        moto.setPrixParJour(motoDTO.getPrixParJour());
+        moto.setStatut(motoDTO.getStatut());
+        moto.setCylindree(motoDTO.getCylindree());
+        moto.setTypeMoto(motoDTO.getTypeMoto());
+        moto.setCasqueInclus(motoDTO.isCasqueInclus());
+        moto.setAgence(agence);
+        return dtoMapper.fromMoto(vehiculeRepository.save(moto));
+    }
+
+    @Override
     public List<LocationDTO> locationHistory(String vehiculeId) {
         List<Location> locations = locationRepository.findByVehiculeId(vehiculeId);
         return locations.stream().map(loc -> dtoMapper.fromLocation(loc)).collect(Collectors.toList());

@@ -1,0 +1,103 @@
+<div class="container mt-4">
+  <div class="card col-md-8 offset-md-2">
+    <div class="card-header">
+      <h3>Modifier le Véhicule ({{ vehicule?.type }})</h3>
+    </div>
+    <div class="card-body" *ngIf="editVehiculeFormGroup">
+      <form [formGroup]="editVehiculeFormGroup" (ngSubmit)="handleUpdateVehicule()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Marque</label>
+            <input type="text" formControlName="marque" class="form-control">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Modèle</label>
+            <input type="text" formControlName="modele" class="form-control">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Matricule</label>
+            <input type="text" formControlName="matricule" class="form-control">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Prix Par Jour (DH)</label>
+            <input type="number" formControlName="prixParJour" class="form-control">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Statut</label>
+            <select formControlName="statut" class="form-select">
+              <option value="Disponible">Disponible</option>
+              <option value="Loue">Loué</option>
+              <option value="EnMaintenance">En Maintenance</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Agence</label>
+            <select formControlName="agenceDTO" class="form-select" [compareWith]="compareAgences">
+              <option *ngFor="let agence of agences$ | async" [ngValue]="agence">
+                {{ agence.nom }} ({{ agence.ville }})
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Specific Fields for Voiture -->
+        <div *ngIf="vehicule?.type === 'Voiture'" class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Nombre de Portes</label>
+            <input type="number" formControlName="nombrePortes" class="form-control">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Carburant</label>
+            <select formControlName="typeCarburant" class="form-select">
+              <option value="Essence">Essence</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybride">Hybride</option>
+              <option value="Electrique">Electrique</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Boite de Vitesse</label>
+            <select formControlName="boiteVitesse" class="form-select">
+              <option value="Manuelle">Manuelle</option>
+              <option value="Automatique">Automatique</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Specific Fields for Moto -->
+        <div *ngIf="vehicule?.type === 'Moto'" class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Cylindrée</label>
+            <input type="number" formControlName="cylindree" class="form-control">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Type Moto</label>
+            <select formControlName="typeMoto" class="form-select">
+              <option value="Sportive">Sportive</option>
+              <option value="Scooter">Scooter</option>
+              <option value="Roadster">Roadster</option>
+              <option value="Touring">Touring</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3 d-flex align-items-center">
+            <div class="form-check mt-4">
+              <input type="checkbox" formControlName="casqueInclus" class="form-check-input" id="casqueInclus">
+              <label class="form-check-label" for="casqueInclus">Casque Inclus</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <button [disabled]="!editVehiculeFormGroup.valid" class="btn btn-primary">Enregistrer les modifications</button>
+          <a routerLink="/vehicules" class="btn btn-secondary ms-2">Annuler</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

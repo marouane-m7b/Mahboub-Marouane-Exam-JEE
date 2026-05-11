@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <div class="card col-md-6 offset-md-3">
+    <div class="card-header">
+      <h3>Modifier l'Agence</h3>
+    </div>
+    <div class="card-body" *ngIf="editAgenceFormGroup">
+      <form [formGroup]="editAgenceFormGroup" (ngSubmit)="handleUpdateAgence()">
+        <div class="mb-3">
+          <label class="form-label">ID</label>
+          <input type="text" formControlName="id" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Nom</label>
+          <input type="text" formControlName="nom" class="form-control">
+          <span class="text-danger" *ngIf="editAgenceFormGroup.controls['nom'].touched && editAgenceFormGroup.controls['nom'].errors && editAgenceFormGroup.controls['nom'].errors['required']">
+            Nom est obligatoire
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Adresse</label>
+          <input type="text" formControlName="adresse" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ville</label>
+          <input type="text" formControlName="ville" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Téléphone</label>
+          <input type="text" formControlName="telephone" class="form-control">
+        </div>
+        <button [disabled]="!editAgenceFormGroup.valid" class="btn btn-primary">Enregistrer</button>
+      </form>
+    </div>
+  </div>
+</div>

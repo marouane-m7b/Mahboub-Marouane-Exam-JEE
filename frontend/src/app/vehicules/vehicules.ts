@@ -33,9 +33,14 @@ export class Vehicules implements OnInit {
   handleDeleteVehicule(v: VehiculeDTO) {
     let conf = confirm(`Supprimer le véhicule "${v.marque} ${v.modele}" ?`);
     if (!conf) return;
-    // Delete button is wired but backend call not yet connected
-    console.log('Delete vehicule:', v.id);
-    // Will be implemented next step
+    this.vehiculeService.deleteVehicule(v.id).subscribe({
+      next: () => {
+        this.handleLoadVehicules();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 
   getStatutClass(statut: string): string {
