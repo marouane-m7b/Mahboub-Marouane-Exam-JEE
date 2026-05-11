@@ -20,6 +20,7 @@ public interface GestionLocationService {
     AgenceDTO getAgence(String agenceId) throws AgenceNotFoundException;
     AgenceDTO updateAgence(AgenceDTO agenceDTO);
     void deleteAgence(String agenceId);
+    void deleteVehicule(String vehiculeId);
     List<LocationDTO> locationHistory(String vehiculeId);
     VehiculeHistoryDTO getVehiculeHistory(String vehiculeId, int page, int size) throws VehiculeNotFoundException;
 }

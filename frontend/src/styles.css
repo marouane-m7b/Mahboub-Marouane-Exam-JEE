@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+/* Bootstrap & Bootstrap Icons */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* Global App Styles */
+body {
+  background-color: #f4f6fb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Navbar custom */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  border-radius: 12px 12px 0 0 !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Table */
+.table thead th {
+  background-color: #e9ecef;
+  font-weight: 600;
+}
+
+/* Badges for statut */
+.badge-disponible {
+  background-color: #198754;
+  color: #fff;
+}
+.badge-loue {
+  background-color: #dc3545;
+  color: #fff;
+}
+.badge-maintenance {
+  background-color: #ffc107;
+  color: #333;
+}
+
+/* Action buttons spacing */
+.btn-action {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.85rem;
+}
