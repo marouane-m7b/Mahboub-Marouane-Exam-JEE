@@ -27,7 +27,7 @@ public class MahboubMarouaneExamJeeApplication {
         SpringApplication.run(MahboubMarouaneExamJeeApplication.class, args);
     }
 
-    @Bean
+    // @Bean
     CommandLineRunner start(AgenceRepository agenceRepository,
                             VehiculeRepository vehiculeRepository,
                             LocationRepository locationRepository) {
@@ -82,6 +82,13 @@ public class MahboubMarouaneExamJeeApplication {
                     locationRepository.save(location);
                 }
             });
+        };
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunner(net.mahboub.mahboubmarouaneexamjee.services.VehiculeService vehiculeService) {
+        return args -> {
+            vehiculeService.consulter();
         };
     }
 }
