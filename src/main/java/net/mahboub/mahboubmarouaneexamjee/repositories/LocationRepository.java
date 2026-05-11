@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface LocationRepository extends JpaRepository<Location, Long> {
     List<Location> findByVehiculeId(String vehiculeId);
+    Page<Location> findByVehiculeId(String vehiculeId, Pageable pageable);
     Page<Location> findByVehiculeIdOrderByDateDebutDesc(String vehiculeId, Pageable pageable);
 }
